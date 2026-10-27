@@ -14,6 +14,11 @@ String::String(const String &s) {
     strdup(s.buf);
 }
 
+// Swap buf between string and s using std::swap
+void String::swap(String &s) {
+
+}
+
 // Assign String s to this String
 String &String::operator=(const String &s) {
     if (this == &s)
