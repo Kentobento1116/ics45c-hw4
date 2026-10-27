@@ -6,12 +6,12 @@ using namespace std;
 
 // Constructs a String from a C string
 String::String(const char *s) {
-    strncpy(buf, s, MAXLEN - 1);
+    strdup(s);
 }
 
 // Constructs a String as a copy of String s
 String::String(const String &s) {
-    strncpy(buf, s.buf, MAXLEN - 1);
+    strdup(s.buf);
 }
 
 // Assign String s to this String
