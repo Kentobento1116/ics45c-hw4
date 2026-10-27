@@ -177,8 +177,12 @@ char *String::strcpy(char *dest, const char *src) {
     return dest;
 }
 
+// Takes C string and returns a duplicate with its own heap storage
 char *String::strdup(const char *src) {
-
+	int len = strlen(src);
+	char *dup = new char[len + 1];
+	strcpy(dup, src);
+	return dup;
 }
 
 // dest and src point to first char in char array

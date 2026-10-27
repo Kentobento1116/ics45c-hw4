@@ -23,8 +23,9 @@ TEST(StringFunction, strcpy) {
     EXPECT_STREQ(result, "");
 }
 
-TEST(StringFunction, strdup) {
-    EXPECT_TRUE(false);
+TEST(StringFunction, strdup) 
+    EXPECT_EQ(String::strdup("foo"), "foo"); 
+	EXPECT_EQ(String::strdup(""), "");
 }
 
 TEST(StringFunction, strncpy) {
