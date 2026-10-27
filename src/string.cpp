@@ -6,26 +6,26 @@ using namespace std;
 
 // Constructs a String from a C string
 String::String(const char *s) {
-    strdup(s);
+    buf = strdup(s);
 }
 
 // Constructs a String as a copy of String s
 String::String(const String &s) {
-    strdup(s.buf);
+    buf = strdup(s.buf);
 }
 
 // Swap buf between string and s using std::swap
 void String::swap(String &s) {
-
+	std::swap(buf, s.buf);
 }
 
 // Assign String s to this String
 String &String::operator=(const String &s) {
-    if (this == &s)
-        return *this;
-
-    strcpy(buf, s.buf);
-    return *this;
+	if (this != &s) {
+		String temp(s);
+		swap(temp);
+	}
+	return *this;
 }
 
 // Allow indexing this string with s[i]
@@ -35,6 +35,15 @@ char &String::operator[](int index) {
         return buf[0];
     }
     return buf[index];
+}
+
+// Allow const indexing
+const char &String::operator[](int index) const {
+	if (index < 0 || index >= strlen(buf)) {
+		cout << "ERROR: Index Out Of Bounds";
+		return buf[0];
+	}
+	return buf[index];
 }
 
 // Returns logical length of this String
@@ -153,7 +162,7 @@ void String::read(std::istream &in) {
 
 // Destructor
 String::~String() {
-
+	delete buf[];
 }
 
 std::ostream &operator<<(std::ostream &out, const String &s) {
