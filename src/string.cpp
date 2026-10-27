@@ -14,6 +14,11 @@ String::String(const String &s) {
     buf = strdup(s.buf);
 }
 
+// Construct string with buffer of given length
+String::String(int length) {
+	buf = new char[length + 1];
+}
+
 // Swap buf between string and s using std::swap
 void String::swap(String &s) {
 	std::swap(buf, s.buf);
@@ -175,7 +180,7 @@ std::istream &operator>>(std::istream &in, String &s) {
     return in;
 }
 
-// Returns reverse of this String// Returns length of string before null terminating character
+// Returns length of string before null terminating character
 int String::strlen(const char *s) {
     int i = 0;
     for ( ; s[i] != '\0'; ++i) {}
