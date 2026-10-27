@@ -25,7 +25,7 @@ void String::swap(String &s) {
 }
 
 // Assign String s to this String
-String &String::operator=(const String &s) {
+String &String::operator=(String s) {
 	if (this != &s) {
 		String temp(s);
 		swap(temp);
@@ -59,7 +59,7 @@ int String::size() const {
 // Returns reverse of this String
 // Does not modify this String
 String String::reverse() const {
-    String temp(strlen(buf));
+    String temp(strlen(buf) + 1);
     reverse_cpy(temp.buf, buf);
     return temp;
 }
@@ -73,7 +73,7 @@ int String::indexOf(char c) const {
 }
 
 // Returns index of first occurrence of s
-int String::indexOf(const String &s) const {
+int String::indexOf(String s) const {
     if (strlen(s.buf) == 0)
         return 0;
 
@@ -83,44 +83,44 @@ int String::indexOf(const String &s) const {
     return -1;
 }
 
-bool String::operator==(const String &s) const {
+bool String::operator==(String s) const {
     if (strcmp(buf, s.buf) == 0)
         return true;
     return false;
 }
 
-bool String::operator!=(const String &s) const {
+bool String::operator!=(String s) const {
     if (strcmp(buf, s.buf) != 0)
         return true;
     return false;
 }
 
-bool String::operator>(const String &s) const {
+bool String::operator>(String s) const {
     if (strcmp(buf, s.buf) > 0)
         return true;
     return false;
 }
 
-bool String::operator<(const String &s) const {
+bool String::operator<(String s) const {
     if (strcmp(buf, s.buf) < 0)
         return true;
     return false;
 }
 
-bool String::operator<=(const String &s) const {
+bool String::operator<=(String s) const {
     if (strcmp(buf, s.buf) <= 0)
         return true;
     return false;
 }
 
-bool String::operator>=(const String &s) const {
+bool String::operator>=(String s) const {
     if (strcmp(buf, s.buf) >= 0)
         return true;
     return false;
 }
 
 // Concatenate this and s and return String
-String String::operator+(const String &s) const {
+String String::operator+(String s) const {
 	String res(strlen(buf) + strlen(s.buf));
 
 	res.buf = strcpy(res.buf, buf);
@@ -130,7 +130,7 @@ String String::operator+(const String &s) const {
 }
 
 // Concatenate s onto end of this String
-String &String::operator+=(const String &s) {
+String &String::operator+=(String s) {
 	int total_len = strlen(buf) + strlen(s.buf);
 	char *new_buf = new char[total_len + 1];
 	new_buf = strcpy(new_buf, buf);
@@ -147,15 +147,16 @@ void String::print(std::ostream &out) const {
 
 // Read next word into this String
 void String::read(std::istream &in) {
-    char content[MAXLEN];
+    char content[1024];
 
-    if (in >> content)
-        strcpy(buf, content);
-}
+    if (in >> content) {
+		delete[] buf;
+    	buf = strdup(content);
+	}
 
 // Destructor
 String::~String() {
-	delete buf[];
+	delete[] buf;
 }
 
 std::ostream &operator<<(std::ostream &out, const String &s) {
