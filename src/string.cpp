@@ -59,7 +59,7 @@ int String::size() const {
 // Returns reverse of this String
 // Does not modify this String
 String String::reverse() const {
-    String temp;
+    String temp(strlen(buf));
     reverse_cpy(temp.buf, buf);
     return temp;
 }
@@ -121,35 +121,23 @@ bool String::operator>=(const String &s) const {
 
 // Concatenate this and s and return String
 String String::operator+(const String &s) const {
-    String R;
-    strcpy(R.buf, buf);
-    int remaining_space = MAXLEN - strlen(buf) - 1;
+	String res(strlen(buf) + strlen(s.buf));
 
-    if (strlen(s.buf) > remaining_space) {
-        cout << "ERROR: String Capacity Exceeded";
-        strncat(R.buf, s.buf, remaining_space);
-    }
-    else
-        strcat(R.buf, s.buf);
-    return R;
+	res.buf = strcpy(res.buf, buf);
+	res.buf = strcat(res.buf, s.buf);
+
+	return res;
 }
 
 // Concatenate s onto end of this String
 String &String::operator+=(const String &s) {
-    char temp[MAXLEN];
-    strcpy(temp, s.buf);
-
-    int remaining_space = MAXLEN - strlen(buf) - 1;
-
-    if (strlen(s.buf) > remaining_space) {
-        cout << "ERROR: String Capacity Exceeded";
-
-        if (remaining_space > 0)
-            strncat(buf, temp, remaining_space);
-    }
-    else
-        strcat(buf, temp);
-    return *this;
+	int total_len = strlen(buf) + strlen(s.buf);
+	char *new_buf = new char[total_len + 1];
+	new_buf = strcpy(new_buf, buf);
+	new_buf = strcat(new_buf, s.buf);
+	delete[] buf;
+	buf = new_buf;
+	return *this;
 }
 
 // Print this String
@@ -224,6 +212,9 @@ char *String::strcat(char *dest, const char *src) {
         dest[i] = src[j];
         ++i;
     }
+	dest[i] = '\0';
+	return dest;
+}
 
 // Appends first n characters from src onto dest
 char *String::strncat(char *dest, const char *src, int n) {
