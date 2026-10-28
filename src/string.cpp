@@ -143,7 +143,7 @@ String String::operator+(const String &s) const {
 // Concatenate s onto end of this String
 String &String::operator+=(const String &s) {
 	int total_len = strlen(buf) + strlen(s.buf);
-	char *new_buf = new char[total_len];
+	char *new_buf = new char[total_len + 1];
 	new_buf = strcpy(new_buf, buf);
 	new_buf = strcat(new_buf, s.buf);
 	delete[] buf;
