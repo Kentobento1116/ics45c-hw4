@@ -26,16 +26,13 @@ void String::swap(String &s) {
 
 // Assign String s to this String
 String &String::operator=(String s) {
-	if (this != &s) {
-		String temp(s);
-		swap(temp);
-	}
+	swap(s);
 	return *this;
 }
 
 // Allow indexing this string with s[i]
 char &String::operator[](int index) {
-    if (index < 0 || index >= strlen(buf)) {
+    if (!in_bounds(index)) {
         cout << "ERROR: Index Out Of Bounds";
         return buf[0];
     }
@@ -44,7 +41,7 @@ char &String::operator[](int index) {
 
 // Allow const indexing
 const char &String::operator[](int index) const {
-	if (index < 0 || index >= strlen(buf)) {
+	if (!in_bounds(index)) {
 		cout << "ERROR: Index Out Of Bounds";
 		return buf[0];
 	}
@@ -121,7 +118,7 @@ bool String::operator>=(String s) const {
 
 // Concatenate this and s and return String
 String String::operator+(String s) const {
-	String res(strlen(buf) + strlen(s.buf));
+	String res(strlen(buf) + strlen(s.buf) + 1);
 
 	res.buf = strcpy(res.buf, buf);
 	res.buf = strcat(res.buf, s.buf);
@@ -153,13 +150,14 @@ void String::read(std::istream &in) {
 		delete[] buf;
     	buf = strdup(content);
 	}
+}
 
 // Destructor
 String::~String() {
 	delete[] buf;
 }
 
-std::ostream &operator<<(std::ostream &out, const String &s) {
+std::ostream &operator<<(std::ostream &out, String s) {
     s.print(out);
     return out;
 }
