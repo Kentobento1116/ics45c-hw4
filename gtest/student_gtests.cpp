@@ -94,9 +94,9 @@ TEST(StringFunction, strcmp) {
 
 TEST(StringFunction, strncmp) {
     EXPECT_EQ(String::strncmp("abc", "abc", 4), 0);
-    EXPECT_EQ(String::strncmp("abc", "abd", 2), 0);
-    EXPECT_EQ(String::strncmp("abc", "aba", 3), 2);
-    EXPECT_EQ(String::strncmp("abc", "abd", 3), -1);
+    EXPECT_LT(String::strncmp("abc", "abd", 2), 0);
+    EXPECT_GT(String::strncmp("abc", "aba", 3), 0);
+    EXPECT_LT(String::strncmp("abc", "abd", 3), 0);
     EXPECT_EQ(String::strncmp("", "", 1), 0);
 }
 

@@ -171,7 +171,7 @@ String::~String() {
 	delete[] buf;
 }
 
-std::ostream &operator<<(std::ostream &out, String s) {
+std::ostream &operator<<(std::ostream &out, const String &s) {
     s.print(out);
     return out;
 }
