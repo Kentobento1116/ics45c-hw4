@@ -14,6 +14,13 @@ String::String(const String &s) {
     buf = strdup(s.buf);
 }
 
+// Construct this String by moving from string s
+String::String(String &&s) 
+	: buf(s.buf)
+{
+	s.buf = nullptr;
+}
+
 // Construct string with buffer of given length
 String::String(int length) {
 	buf = new char[length + 1];
@@ -25,7 +32,14 @@ void String::swap(String &s) {
 }
 
 // Assign String s to this String
-String &String::operator=(String s) {
+String &String::operator=(const String &s) {
+	String temp(s);
+	swap(temp);
+	return *this;
+}
+
+// Assign this String by moving from String s
+String &String::operator=(String &&s) {
 	swap(s);
 	return *this;
 }
@@ -70,7 +84,7 @@ int String::indexOf(char c) const {
 }
 
 // Returns index of first occurrence of s
-int String::indexOf(String s) const {
+int String::indexOf(const String &s) const {
     if (strlen(s.buf) == 0)
         return 0;
 
@@ -80,44 +94,44 @@ int String::indexOf(String s) const {
     return -1;
 }
 
-bool String::operator==(String s) const {
+bool String::operator==(const String &s) const {
     if (strcmp(buf, s.buf) == 0)
         return true;
     return false;
 }
 
-bool String::operator!=(String s) const {
+bool String::operator!=(const String &s) const {
     if (strcmp(buf, s.buf) != 0)
         return true;
     return false;
 }
 
-bool String::operator>(String s) const {
+bool String::operator>(const String &s) const {
     if (strcmp(buf, s.buf) > 0)
         return true;
     return false;
 }
 
-bool String::operator<(String s) const {
+bool String::operator<(const String &s) const {
     if (strcmp(buf, s.buf) < 0)
         return true;
     return false;
 }
 
-bool String::operator<=(String s) const {
+bool String::operator<=(const String &s) const {
     if (strcmp(buf, s.buf) <= 0)
         return true;
     return false;
 }
 
-bool String::operator>=(String s) const {
+bool String::operator>=(const String &s) const {
     if (strcmp(buf, s.buf) >= 0)
         return true;
     return false;
 }
 
 // Concatenate this and s and return String
-String String::operator+(String s) const {
+String String::operator+(const String &s) const {
 	String res(strlen(buf) + strlen(s.buf) + 1);
 
 	res.buf = strcpy(res.buf, buf);
@@ -127,7 +141,7 @@ String String::operator+(String s) const {
 }
 
 // Concatenate s onto end of this String
-String &String::operator+=(String s) {
+String &String::operator+=(const String &s) {
 	int total_len = strlen(buf) + strlen(s.buf);
 	char *new_buf = new char[total_len + 1];
 	new_buf = strcpy(new_buf, buf);
