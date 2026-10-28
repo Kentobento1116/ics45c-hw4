@@ -70,7 +70,7 @@ int String::size() const {
 // Returns reverse of this String
 // Does not modify this String
 String String::reverse() const {
-    String temp(strlen(buf) + 1);
+    String temp(strlen(buf));
     reverse_cpy(temp.buf, buf);
     return temp;
 }
@@ -132,7 +132,7 @@ bool String::operator>=(const String &s) const {
 
 // Concatenate this and s and return String
 String String::operator+(const String &s) const {
-	String res(strlen(buf) + strlen(s.buf) + 1);
+	String res(strlen(buf) + strlen(s.buf));
 
 	res.buf = strcpy(res.buf, buf);
 	res.buf = strcat(res.buf, s.buf);
@@ -143,7 +143,7 @@ String String::operator+(const String &s) const {
 // Concatenate s onto end of this String
 String &String::operator+=(const String &s) {
 	int total_len = strlen(buf) + strlen(s.buf);
-	char *new_buf = new char[total_len + 1];
+	char *new_buf = new char[total_len];
 	new_buf = strcpy(new_buf, buf);
 	new_buf = strcat(new_buf, s.buf);
 	delete[] buf;
